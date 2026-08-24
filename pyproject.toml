@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "reelhawk"
+version = "0.1.0"
+description = "An autonomous video clipping agent: finds the best moments in long-form video, cuts them into vertical clips with word-synced karaoke captions, quality-gates every clip, and optionally publishes them."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+authors = [{ name = "Bruno Pessoa", email = "bmpessoa22@gmail.com" }]
+keywords = ["video", "clips", "reels", "shorts", "whisper", "ffmpeg", "ai-agent"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Video",
+]
+dependencies = [
+    "anthropic>=0.40",
+    "faster-whisper>=1.0",
+    "yt-dlp>=2024.10.0",
+    "pydantic>=2.7",
+    "PyYAML>=6.0",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+face = ["opencv-python>=4.10", "numpy>=1.26"]
+dev = ["pytest>=8.0", "black>=24.0", "isort>=5.13"]
+
+[project.scripts]
+reelhawk = "reelhawk.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/BrunoPessoa22/reelhawk"
+Issues = "https://github.com/BrunoPessoa22/reelhawk/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/reelhawk"]
+
+[tool.black]
+line-length = 100
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

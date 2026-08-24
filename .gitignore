@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Project data
+reelhawk-data/
+workdir/
+*.mp4
+*.mkv
+*.webm
+*.wav
+*.ass
+
+# Downloaded models (fetched by scripts/download_models.py)
+models/*.onnx
+models/*.bin
+*.npy
+
+# Secrets and local config
+.env
+reelhawk.yaml
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Tests
+.pytest_cache/

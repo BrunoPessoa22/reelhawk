@@ -1,0 +1,62 @@
+# reelhawk configuration. Copy to reelhawk.yaml and edit.
+# Every field is optional; the values below are the defaults.
+# Secrets NEVER go in this file: ANTHROPIC_API_KEY, IG_ACCESS_TOKEN and
+# IG_USER_ID are read from the environment.
+
+workdir: reelhawk-data
+model: claude-opus-5          # used for highlight mining and the gate's LLM review
+
+whisper:
+  model: large-v3-turbo       # any faster-whisper model name; "small" for weak machines
+  device: auto
+  compute_type: auto
+  language: null              # null = autodetect; or "en", "pt", ...
+
+clip:
+  min_seconds: 15
+  max_seconds: 75
+  candidates: 6               # moments to ask the miner for per video
+  pad_seconds: 0.35
+
+captions:
+  enabled: true
+  font: Noto Sans Bold
+  font_size: 54
+  margin_v: 300
+  max_words_per_line: 3
+  max_chars_per_line: 26
+  base_color: FFFFFF          # ASS BGR hex
+  highlight_color: 00D7FF     # karaoke sweep color (yellow)
+
+render:
+  width: 1080
+  height: 1920
+  mode: auto                  # auto | face | panorama | zoom
+  strip_px: 0                 # crop this many pixels off the bottom first
+                              # (for sources with burned-in caption bands)
+  crf: 20
+  fps: 30
+  loudness_lufs: -14
+  fade_seconds: 0.15
+
+face:
+  enabled: false              # needs: pip install "reelhawk[face]" + download_models.py
+  models_dir: models
+  embedding: null             # optional target-person .npy (build_face_embedding.py)
+  identity_threshold: 0.45
+  sample_step_seconds: 1.0
+
+gate:
+  min_caption_coverage: 0.55
+  require_sentence_end: true
+  min_face_pct: 0.5
+  llm_review: true
+
+post:
+  mode: export                # export | instagram
+  disclosure: ""              # e.g. "Clipped and captioned by an AI agent."
+  hashtags: []
+  upload_cmd: null            # instagram mode: shell template, receives {path},
+                              # must print a public URL. Example:
+                              # "aws s3 cp {path} s3://bucket/ --acl public-read && ..."
+  ig_api_version: v21.0
